@@ -4,3 +4,4 @@ public class Numbers {
         return Math.max(a, Math.min(b, x));
     }
 }
+
