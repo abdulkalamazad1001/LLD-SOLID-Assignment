@@ -5,18 +5,21 @@ public class Demo06 {
 
         Notification n = new Notification("Welcome", "Hello and welcome to SST!", "riya@sst.edu", "9876543210");
 
-        NotificationSender email = new EmailSender(audit);
-        NotificationSender sms = new SmsSender(audit);
-        NotificationSender wa = new WhatsAppSender(audit);
+        NotificationSender[] senders = {
+                new EmailSender(audit),
+                new SmsSender(audit),
+                new WhatsAppSender(audit)
+        };
 
-        email.send(n);
-        sms.send(n);
-
-        try {
-            wa.send(n);
-        } catch (NotificationException ex) {
-            System.out.println("WA ERROR: " + ex.getMessage());
-            audit.add("WA failed");
+        for (NotificationSender sender : senders) {
+            try {
+                sender.send(n);
+            } catch (NotificationException ex) {
+                String label = sender.getClass().getSimpleName().replace("Sender", "").equals("WhatsApp") ? "WA"
+                        : sender.getClass().getSimpleName().replace("Sender", "").toUpperCase();
+                System.out.println(label.toUpperCase() + " ERROR: " + ex.getMessage());
+                audit.add(sender.getClass().getSimpleName().toLowerCase().replace("sender", "") + " failed");
+            }
         }
 
         System.out.println("AUDIT entries=" + audit.size());
