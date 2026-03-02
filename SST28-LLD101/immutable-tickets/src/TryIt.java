@@ -4,31 +4,54 @@ import com.example.tickets.TicketService;
 import java.util.List;
 
 /**
- * Starter demo that shows why mutability is risky.
- *
- * After refactor:
- * - direct mutation should not compile (no setters)
- * - external modifications to tags should not affect the ticket
- * - service "updates" should return a NEW ticket instance
+ * Demonstration of immutability and the Builder pattern.
  */
 public class TryIt {
 
     public static void main(String[] args) {
         TicketService service = new TicketService();
 
-        IncidentTicket t = service.createTicket("TCK-1001", "reporter@example.com", "Payment failing on checkout");
-        System.out.println("Created: " + t);
+        // 1. Create a ticket
+        IncidentTicket t1 = service.createTicket("TCK-1001", "reporter@example.com", "Payment failing on checkout");
+        System.out.println("Created: " + t1);
 
-        // Demonstrate post-creation mutation through service
-        service.assign(t, "agent@example.com");
-        service.escalateToCritical(t);
-        System.out.println("\nAfter service mutations: " + t);
+        // 2. "Update" via service (returns NEW instance)
+        IncidentTicket t2 = service.assign(t1, "agent@example.com");
+        IncidentTicket t3 = service.escalateToCritical(t2);
 
-        // Demonstrate external mutation via leaked list reference
-        List<String> tags = t.getTags();
-        tags.add("HACKED_FROM_OUTSIDE");
-        System.out.println("\nAfter external tag mutation: " + t);
+        System.out.println("\nOriginal after service calls (unchanged): " + t1);
+        System.out.println("Final version (new object): " + t3);
 
-        // Starter compiles; after refactor, you should redesign updates to create new objects instead.
+        // 3. Demonstrate tag immutability (Defensive copying)
+        try {
+            List<String> externalTags = t3.getTags();
+            System.out.println("\nAttempting to mutate tags list from outside...");
+            externalTags.add("HACKER_ATTEMPT");
+        } catch (UnsupportedOperationException e) {
+            System.out.println("Caught expected exception: Cannot mutate unmodifiable list!");
+        }
+
+        // 4. Demonstrate Validation in Builder
+        System.out.println("\nTesting validation (Expect failure for bad email)...");
+        try {
+            IncidentTicket.builder()
+                    .id("VALID-123")
+                    .reporterEmail("not-an-email")
+                    .title("Valid Title")
+                    .build();
+        } catch (IllegalArgumentException e) {
+            System.out.println("Caught expected validation error: " + e.getMessage());
+        }
+
+        System.out.println("\nTesting validation (Expect failure for long title)...");
+        try {
+            IncidentTicket.builder()
+                    .id("VALID-123")
+                    .reporterEmail("valid@email.com")
+                    .title("A".repeat(81))
+                    .build();
+        } catch (IllegalArgumentException e) {
+            System.out.println("Caught expected validation error: " + e.getMessage());
+        }
     }
 }
