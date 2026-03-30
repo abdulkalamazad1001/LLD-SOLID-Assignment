@@ -1,17 +1,15 @@
 # Elevator System Design (LLD)
 
-A robust, SOLID-compliant implementation of a multi-elevator system. This project demonstrates clean architectural design after a recent structural refinement and refactoring.
-
-## 📋 Problem Statement
+## Problem Statement
 Design a system to control multiple elevators in a building that efficiently handles both external (floor calls) and internal (destination selection) requests. The system must support various scheduling strategies and incorporate safety features like load sensors.
 
-## 🛠 Features
+## Features
 - **Singleton Pattern**: The core system is managed by a single, thread-safe `Elevator` instance.
 - **Strategy Pattern**: Supports dynamic switching between scheduling algorithms (FCFS and Look/SSTF).
 - **Concurrency & Safety**: Thread-safe state management and automated sensor-driven safety interrupts (weight limits).
 - **Observer Pattern**: A dedicated `Sensor` observer system for real-time monitoring.
 
-## 🏗 System Design (UML)
+## System Design (UML)
 
 ```mermaid
 classDiagram
@@ -59,7 +57,7 @@ classDiagram
     ElevatorCar "1" *-- "1" Door : has
 ```
 
-## 🚀 How to Run the Simulation
+## How to Run:
 
 1. **Compile the source files**:
    ```bash
