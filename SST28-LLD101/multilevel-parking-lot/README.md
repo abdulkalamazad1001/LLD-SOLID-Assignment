@@ -48,3 +48,4 @@ javac com/example/parking/enums/*.java com/example/parking/models/*.java com/exa
 # Run the simulation App
 java com.example.parking.App
 ```
+ 
