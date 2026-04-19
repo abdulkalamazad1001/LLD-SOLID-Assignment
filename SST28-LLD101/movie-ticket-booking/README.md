@@ -1,17 +1,15 @@
 # Movie Ticket Booking System - LLD Design
 
-A robust, thread-safe Low-Level Design (LLD) for a Movie Ticket Booking System like BookMyShow. This project demonstrates **SOLID principles**, the **Singleton pattern**, and **Concurrency Management** in a multi-threaded environment.
-
-## 📋 Problem Statement
+## Problem Statement
 Design a system that allows customers to search for movies and theaters in a city, view available shows/seats, and book tickets. Simultaneously, administrators can manage movies, theaters, and schedule shows. The system must handle concurrent booking attempts for the same seats efficiently.
 
-## 🛠 Features
+## Features
 - **Singleton Pattern**: The `BookingManager` uses a thread-safe, double-checked locking mechanism to ensure a single global state.
 - **Seat Tiering**: Support for various seat categories (Silver, Gold, Platinum) with dynamic pricing.
 - **Concurrency Control**: Utilizes `ReentrantLock` at the `Show` level to prevent double-booking, ensuring that seat availability is correctly maintained across multiple concurrent sessions.
 - **API Interfaces**: Cleanly separated Customer and Admin functionalities.
 
-## 🏗 System Design (UML)
+## System Design (UML)
 
 ```mermaid
 classDiagram
@@ -83,7 +81,7 @@ classDiagram
     Booking o-- Seat
 ```
 
-## 🚀 How to Run the Simulation
+## How to Run:
 
 1. **Compile the code**:
    ```powershell
@@ -94,11 +92,3 @@ classDiagram
    ```powershell
    java -cp SST28-LLD101/movie-ticket-booking/src com.example.booking.Main
    ```
-
-## 🧪 Simulation Output Highlights
-- **Concurrency Test**: The simulation spawns two threads that attempt to book the **exact same seats** at the same millisecond. The system ensures only one user succeeds, while the other receives a "Seats might be taken" failure message.
-- **Booking Summary**: At the end, a summary of all successful bookings, including seat types and total revenue, is displayed.
-
-## 🎓 Key Learnings
-- **SOLID Consistency**: The project is structured with single responsibilities (e.g., `Show` handles its own seat logic).
-- **Thread Safety**: Demonstrated how to use synchronized patterns and explicit locks to manage shared resources in a high-concurrency booking environment.

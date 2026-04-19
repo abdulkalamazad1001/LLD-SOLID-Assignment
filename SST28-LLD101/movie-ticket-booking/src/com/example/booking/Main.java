@@ -10,7 +10,6 @@ public class Main {
     public static void main(String[] args) {
         BookingManager manager = BookingManager.getInstance();
 
-        // 1. Setup Sample Data
         City city = new City("Mumbai");
         Theater theater = new Theater("T1", "PVR Cinemas", "Mumbai Central");
         Screen screen1 = new Screen("S1");
@@ -40,8 +39,6 @@ public class Main {
         System.out.println("Movie: " + movie.getTitle());
         System.out.println("Show ID: " + show.getId());
 
-        // 2. Multi-threaded Booking Attempt (Concurrency Test)
-        // Two users try to book the EXACT SAME seats (R1C1 and R1C2) at the same time
         List<String> targetSeats = Arrays.asList("R1C1", "R1C2");
         System.out.println("\n[Concurrency Test] Two users attempting to book seats " + targetSeats + " simultaneously...");
 
@@ -74,7 +71,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        // 3. Different Seat Booking Attempt
         System.out.println("\n[Booking Test] Another user attempting to book seats R2C1 and R2C2...");
         List<String> otherSeats = Arrays.asList("R2C1", "R2C2");
         Booking b3 = manager.createBooking("U3", "SH1", otherSeats);

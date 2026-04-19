@@ -15,7 +15,6 @@ import java.util.Map;
 public class App {
 
     public static void main(String[] args) {
-        // Setup initial slots with distance to gate A and gate B
         Slot s1 = new Slot("S1", SlotType.SMALL, createDistances(10, 50));
         Slot s2 = new Slot("S2", SlotType.SMALL, createDistances(20, 40));
         Slot s3 = new Slot("S3", SlotType.MEDIUM, createDistances(30, 30));
@@ -39,9 +38,6 @@ public class App {
         System.out.println(
                 "Parked car in: " + t2.getAllocatedSlot().getId() + " (" + t2.getAllocatedSlot().getType() + ")");
 
-        // 3. Park another bike requesting SMALL at Gate A, but upgrade to MEDIUM
-        // because S2 is further than S3?
-        // Logic prefers requested type, let's see which it picks:
         Vehicle bike2 = new Vehicle("MH-12-8888", VehicleType.TWO_WHEELER);
         Ticket t3 = system.park(bike2, timeNow, SlotType.SMALL, "Gate A");
         System.out.println(
