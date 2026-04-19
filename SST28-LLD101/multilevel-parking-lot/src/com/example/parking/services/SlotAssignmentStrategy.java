@@ -27,7 +27,6 @@ public class SlotAssignmentStrategy {
             return null;
         }
 
-        // Prefer requested type, otherwise fallback to the nearest upgraded type
         return availableSlots.stream()
                 .filter(s -> s.getType() == requestedType)
                 .findFirst()

@@ -25,14 +25,14 @@ public class App {
 
         System.out.println("Initial status: " + system.status());
 
-        // 1. Park a bike at Gate A
+        // Park a bike at Gate A
         Vehicle bike = new Vehicle("KA-01-1234", VehicleType.TWO_WHEELER);
         long timeNow = System.currentTimeMillis();
         Ticket t1 = system.park(bike, timeNow, SlotType.SMALL, "Gate A");
         System.out.println(
                 "Parked bike in: " + t1.getAllocatedSlot().getId() + " (" + t1.getAllocatedSlot().getType() + ")");
 
-        // 2. Park a car at Gate B
+        // Park a car at Gate B
         Vehicle car = new Vehicle("DL-4C-9999", VehicleType.CAR);
         Ticket t2 = system.park(car, timeNow, SlotType.MEDIUM, "Gate B");
         System.out.println(
@@ -45,7 +45,7 @@ public class App {
 
         System.out.println("Status after parking: " + system.status());
 
-        // 4. Exit bike after 3 hours
+        // Exit bike after 3 hours
         long exitTime = timeNow + (3 * 60 * 60 * 1000);
         double bill = system.exit(t1, exitTime);
         System.out.println("Bike exited. Bill for " + t1.getAllocatedSlot().getType() + ": $" + bill);
